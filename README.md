@@ -20,3 +20,14 @@ It works as follows:
 There are undocumented featured in this repo, like the use of M4
 (preprocessor) and automatic processing of `fig` figures.
 
+# To do
+
+- Enable generation of html.
+- Further documentation.
+- Make `a_template.w` empty.
+- Include nuweb itself.
+- Find out which LaTeX packages are required, how it can be found out
+  whether they are available and how they can be installed if not
+  available.
+  
+  
