@@ -1,0 +1,48 @@
+#!/bin/bash
+# install -- Start a new Nuweb project
+# 20180201 Paul Huygen
+
+# Options:
+# - Author
+# - Doctitle
+unset author
+unset title
+while getopts "h?va:t:" opt; do
+    case "$opt" in
+    h|\?)
+        echo "Usage: install -a <author> -t <title>"
+        exit 0
+        ;;
+    v)  verbose=1
+        ;;
+    a)  author=$OPTARG
+        ;;
+    t)  title=$OPTARG
+        ;;
+    esac
+done
+
+if [ -z ${author+x} ]
+then 
+  read -p "author: "  author
+fi
+
+if [ -z ${title+x} ]
+then 
+  read -p "title: "  title
+fi
+
+projname=${PWD##*/} 
+
+sed1="s/TheAuthor/$author/g"
+sed2="s/TheDocTitle/$title/g"
+
+cat instm4.tpl \
+    | sed s/TheAuthor/"$author"/g \
+    | sed s/TheDocName/"$projname"/g \
+    | sed s/TheDocTitle/"$title"/g \
+    > inst.m4
+#cat instm4.tpl | sed $sed1  | sed $sed2 > inst.m4
+
+cp a_template.w a_"$projname".w
+m4 -P Makefile.m4 >Makefile

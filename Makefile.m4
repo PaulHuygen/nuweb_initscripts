@@ -1,9 +1,14 @@
 m4_include(inst.m4)m4_dnl
 
 .SUFFIXES: .pdf .w .tex .html .aux .log .php
+.PHONY : html
 
 figfiles=$(shell ls *.fig)
 figbases=$(basename $(figfiles))
+
+#
+# PDF figures
+#
 
 pdft_names=$(foreach fil,$(figbases), $(fil).pdftex_t)
 pdf_fig_names=$(foreach fil,$(figbases), $(fil).pdftex)
@@ -19,6 +24,27 @@ pdf_fig_names=$(foreach fil,$(figbases), $(fil).pdftex)
 	chmod 775 $(W2PDF)
 	$(W2PDF) $*
 
+#
+# HTML
+#
+hfigfiles=$(foreach fil, $(figfiles), html/$(fil))
+
+pst_names=$(foreach fil, $(figbases), html/$(fil).pstex_t)
+psfig_names=$(foreach fil, $(figbases), html/$(fil).pstex)
+
+
+
+html/%.pstex : %.fig
+	fig2dev -L pstex $< > $@
+
+html/%.pstex_t : %.fig html/%.pstex
+	fig2dev -L pstex_t -p html/$*.pstex $*.fig > $@
+
+html/m4_docname.w : m4_docname.w
+	cd html && ln -fs ../m4_docname.w .
+
+
+# cd html && ln -s ../$< .
 
 
 
@@ -35,3 +61,11 @@ sources : <!m4_!>m4_docname.w
 
 pdf : m4_docname.w  $(pdf_fig_names) $(pdft_names)
 	./w2pdf $<
+
+# html : $(hfigfiles)
+
+html : $(psfig_names) $(pst_names) html/m4_docname.w
+	mkdir -p html
+	cd html && export TEXINPUTS=../: && ../w2html m4_docname
+
+
