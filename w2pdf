@@ -1,0 +1,40 @@
+#!/bin/bash
+# w2pdf -- compile a nuweb file
+# usage: w2pdf [filename]
+NUWEB=/usr/local/bin/nuweb
+LATEXCOMPILER=pdflatex
+nufil=$1
+trunk=${1%%.*}
+texfil=${trunk}.tex
+auxfil=${trunk}.aux
+oldaux=old.${trunk}.aux
+indexfil=${trunk}.idx
+oldindexfil=old.${trunk}.idx
+
+LOOPCOUNTER=0
+while
+  ! cmp -s $auxfil $oldaux 
+do
+  if [ -e $auxfil ]
+  then
+   cp $auxfil $oldaux
+  fi
+  if [ -e $indexfil ]
+  then
+   cp $indexfil $oldindexfil
+  fi
+  $NUWEB $nufil
+  $LATEXCOMPILER $texfil
+  makeindex $trunk
+  bibtex $trunk
+  
+  if [ $LOOPCOUNTER -ge 10 ]
+  then
+    cp $auxfil $oldaux
+  fi;
+done
+
+rm $oldaux
+
+
+

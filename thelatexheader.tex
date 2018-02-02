@@ -1,0 +1,58 @@
+\pagestyle{headings}
+\usepackage{pdfswitch}
+\usepackage{a4wide}
+\usepackage{alltt}
+%\usepackage{color}
+\usepackage[british]{babel}
+\usepackage{figlatex}
+\usepackage{lmodern}
+\usepackage{makeidx}
+\renewcommand{\indexname}{General index}
+\makeindex
+\title{\theTitle}
+\author{\theAuthor}
+\date{\today}
+\ifpdf
+ \renewcommand{\NWlink}[2]{\hyperlink{#1}{#2}}
+ \renewcommand{\NWtarget}[2]{\hypertarget{#1}{#2}}
+ \renewcommand{\NWsep}{$\diamond$\rule[-1\baselineskip]{0pt}{1\baselineskip}}
+\else
+\usepackage{html}
+\renewcommand{\NWlink}[2]{\hyperlink{#1}{#2}}
+\renewcommand{\NWtarget}[2]{\hypertarget{#1}{#2}}
+\fi
+%
+% Settings
+%
+\raggedbottom
+%
+\makeatletter
+\if@oldtoc
+  \renewcommand\toc@font[1]{\relax}
+\else
+  \renewcommand*\toc@font[1]{%
+    \ifcase#1\relax
+    \chaptocfont
+    \or\slshape
+    \or\rmfamily
+    \fi}
+  \fi
+\makeatother
+%  
+\newcommand{\chaptocfont}{\large\bfseries}
+
+\newcommand{\pdfpsinc}[2]{%
+\ifpdf
+  \input{#1}
+\else
+  \input{#2}
+\fi
+}
+
+
+
+
+%%%Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
