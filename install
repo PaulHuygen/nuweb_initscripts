@@ -1,6 +1,16 @@
 #!/bin/bash
 # install -- Start a new Nuweb project
 # 20180201 Paul Huygen
+thisdirname=${PWD##*/}
+projname=`cd .. && echo ${PWD##*/}`
+
+
+function usage () {
+cat <<EOF
+Usage: install -a <author> -t <title>
+e.g. "install -a "Paul Huygen" -t "Program to demonstrate nuweb\_initscripts"
+EOF
+}
 
 # Options:
 # - Author
@@ -10,7 +20,7 @@ unset title
 while getopts "h?va:t:" opt; do
     case "$opt" in
     h|\?)
-        echo "Usage: install -a <author> -t <title>"
+        usage
         exit 0
         ;;
     v)  verbose=1
@@ -32,17 +42,27 @@ then
   read -p "title: "  title
 fi
 
-projname=${PWD##*/} 
-
-sed1="s/TheAuthor/$author/g"
-sed2="s/TheDocTitle/$title/g"
 
 cat instm4.tpl \
     | sed s/TheAuthor/"$author"/g \
     | sed s/TheDocName/"$projname"/g \
     | sed s/TheDocTitle/"$title"/g \
-    > inst.m4
+    > ../inst.m4
 #cat instm4.tpl | sed $sed1  | sed $sed2 > inst.m4
 
-cp a_template.w a_"$projname".w
-m4 -P Makefile.m4 >Makefile
+cp a_template.w ../a_"$projname".w
+cp thelatexheader.tex ../
+cd ..
+m4 -P $projname/Makefile.m4 >Makefile
+cp $projname/w2pdf .
+cd $thisdirname
+
+#
+# HTML
+#
+mkdir -p ../html
+cd ../html
+cp ../$thisdirname/w2html .
+ln -s ../thelatexheader.tex ./
+
+
