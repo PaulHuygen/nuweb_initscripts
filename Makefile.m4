@@ -66,6 +66,6 @@ pdf : m4_docname.w  $(pdf_fig_names) $(pdft_names)
 
 html : $(psfig_names) $(pst_names) html/m4_docname.w
 	mkdir -p html
-	cd html && export TEXINPUTS=../: && ../w2html m4_docname
+	cd html && export TEXINPUTS=../: && ./w2html m4_docname
 
 

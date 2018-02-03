@@ -4,6 +4,8 @@
 thisdirname=${PWD##*/}
 projname=`cd .. && echo ${PWD##*/}`
 
+echo This dir: $thisdirname
+echo proj: $thisdirname
 
 function usage () {
 cat <<EOF
@@ -52,9 +54,10 @@ cat instm4.tpl \
 
 cp a_template.w ../a_"$projname".w
 cp thelatexheader.tex ../
+cp fileschema.fig ../
 cd ..
-m4 -P $projname/Makefile.m4 >Makefile
-cp $projname/w2pdf .
+m4 -P $thisdirname/Makefile.m4 >Makefile
+cp $thisdirname/w2pdf .
 cd $thisdirname
 
 #
@@ -63,6 +66,7 @@ cd $thisdirname
 mkdir -p ../html
 cd ../html
 cp ../$thisdirname/w2html .
+cp ../$thisdirname/html.sty .
 ln -s ../thelatexheader.tex ./
 
 
