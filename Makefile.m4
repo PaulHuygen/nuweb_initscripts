@@ -56,7 +56,7 @@ m4_docname.w : <!m4_!>m4_docname.w
 	m4 -P $< > $@
 
 
-sources : <!m4_!>m4_docname.w
+sources : m4_docname.w
 	nuweb m4_docname.w
 
 pdf : m4_docname.w  $(pdf_fig_names) $(pdft_names)
