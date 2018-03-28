@@ -32,4 +32,27 @@ too.
 
 That's all for now.
 
+\section{Indexes}
+\label{sec:indexes}
+
+\subsection{Filenames}
+\label{sec:filenames}
+
+@f
+
+\subsection{Macro's}
+\label{sec:macros}
+
+@m
+
+\subsection{Variables}
+\label{sec:veriables}
+
+@u
+
+@% \subsection{General index}
+@% \label{sec:genindex}
+
+\printindex
+
 \end{document}
