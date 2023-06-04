@@ -9,7 +9,7 @@ It works as follows:
    "working directory", eg named `my_project`.
 2. Cd to the working directory and clone this project.
 3. Cd to the directory of the clone.
-4. Run `install -a <author> -t <title>` with your name instead of
+4. Run `./install -a <author> -t <title>` with your name instead of
    `<author>` and document title instead of `<title>`. Then cd back to the working directory.
 5. A file `a_<title>.w` has been created. This file will be the
    basic nuweb file for your project.
